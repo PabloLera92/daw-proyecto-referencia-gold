@@ -23,7 +23,7 @@
 
 > [!IMPORTANT]
 > **Repositorio de referencia (Gold Standard)** · CIFP Avilés — 2º DAW Virtual — Curso 2026/2027 · Módulo PIDW2.
-> Tutoría: **Pablo Lera Menéndez**. Backlog y seguimiento: [Issues e hitos del repositorio](https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues) <!-- TODO: sustituir por la URL https://github.com/users/PabloLera92/projects/<N> cuando exista el tablero de GitHub Projects -->.
+> Tutoría: **Pablo Lera Menéndez**. Tablero Kanban: [GitHub Projects — GesTaller](https://github.com/users/PabloLera92/projects/1) · Backlog: [Issues](https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues).
 >
 > Muestra la estructura, la documentación y las convenciones mínimas exigidas en los Hitos 1 y 2. **No contiene la lógica de negocio completa** a propósito: el objetivo es que aprendas a *leer* una arquitectura, no a copiarla. Cada archivo lleva bloques «NOTAS DE ARQUITECTURA PARA EL ALUMNO».
 
@@ -33,6 +33,7 @@
 | Módulo     | Proyecto Intermodular (PIDW2)                                                               |
 | Autor      | Alumno Ejemplo (ficticio)                                                                   |
 | Tutor      | Pablo Lera Menéndez                                                                         |
+| Tablero    | [GitHub Projects — GesTaller](https://github.com/users/PabloLera92/projects/1)                                                        |
 | Documentos | [Anteproyecto](Anteproyecto.md) · [DER](docs/der.md) · [Contrato API](docs/contrato_api_rest.md) · [Pruebas de API](docs/api/README.md) |
 
 ---
@@ -329,7 +330,7 @@ Antes de ejecutar un comando, **predice** qué va a pasar; después compruébalo
 | 4    | Matriz de Add-ons Técnicos              | 07 Feb 2027      | ⏳ Pendiente  | `[░░░░░░░░░░] 0%`         |
 | 5    | Memoria Técnica & Defensa               | 26 Feb 2027      | ⏳ Pendiente  | `[░░░░░░░░░░] 0%`         |
 
-El seguimiento detallado está en las [Issues del repositorio](https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues) y sus [hitos](https://github.com/PabloLera92/daw-proyecto-referencia-gold/milestones).
+El seguimiento detallado está en el [tablero Kanban](https://github.com/users/PabloLera92/projects/1), las [Issues del repositorio](https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues) y sus [hitos](https://github.com/PabloLera92/daw-proyecto-referencia-gold/milestones).
 
 ---
 

@@ -4,7 +4,7 @@
 **Centro:** CIFP Avilés (Curso 2026/2027)
 **Autor/a:** Alumno Ejemplo (ficticio)
 **Repositorio GitHub:** https://github.com/PabloLera92/daw-proyecto-referencia-gold
-**Tablero GitHub Projects:** https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues (backlog de historias de usuario con hitos)
+**Tablero GitHub Projects:** https://github.com/users/PabloLera92/projects/1
 
 > **Nota para el alumno.** Este es el entregable del Hito 1 resuelto para un dominio ficticio. Sigue la estructura de la plantilla oficial, pero el contenido de tu anteproyecto debe ser **propio y específico**: en el Hito 1 se rechaza como NO-GO un dominio copiado de un tutorial o reutilizado de otro proyecto. Se entrega además en PDF (portada institucional, índice paginado, tercera persona). Borra este recuadro en tu versión.
 
