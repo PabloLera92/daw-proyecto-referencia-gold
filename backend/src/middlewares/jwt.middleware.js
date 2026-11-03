@@ -2,21 +2,39 @@
 
 const jwt = require('jsonwebtoken');
 const env = require('../config/env');
-const { fail } = require('../utils/response');
+const { problem } = require('../utils/response');
 
 /**
- * MIDDLEWARE — preocupaciones transversales (autenticación y autorización).
- * Se declaran una vez y se enchufan en las rutas; los controladores no repiten
- * esta lógica ni saben cómo se verifica un token.
+ * ============================================================================
+ * MIDDLEWARES                                    (backend/src/middlewares/)
+ * ============================================================================
+ * RESPONSABILIDAD ÚNICA: interceptar la petición ANTES de que llegue al
+ * controlador para aplicar una preocupación transversal: validar tokens,
+ * comprobar roles, sanear/validar datos, limitar peticiones (rate limit)...
+ *
+ * Un middleware recibe `(req, res, next)`:
+ *   - si todo es correcto, llama a `next()` y la petición continúa;
+ *   - si no, responde él mismo (401, 403, 422...) y la cadena se corta.
+ *
+ * Por qué existen: la seguridad se declara UNA vez en las rutas y no se repite
+ * (ni se olvida) en cada controlador.
+ *
+ * Qué NO hacen: lógica de negocio ni acceso a datos del dominio. Y recuerda:
+ * comprobar la TITULARIDAD de un recurso (¿esta orden es tuya?) no es tarea de
+ * un middleware sino del servicio, que es quien consulta el recurso.
  */
 
-/** AUTENTICACIÓN (401): ¿quién eres? Deja `req.user` si el token es válido. */
-function verifyJwt(req, res, next) {
+/**
+ * AUTENTICACIÓN (401): ¿quién eres?
+ * Verifica firma y caducidad del token y deja la identidad en `req.user`.
+ */
+function authGuard(req, res, next) {
   const header = req.headers.authorization || '';
   const [scheme, token] = header.split(' ');
 
   if (scheme !== 'Bearer' || !token) {
-    return fail(res, 401, 'Token no proporcionado');
+    return problem(req, res, 401, 'missing-token', 'No autenticado',
+      'Falta la cabecera Authorization: Bearer <token>.');
   }
 
   try {
@@ -25,18 +43,26 @@ function verifyJwt(req, res, next) {
     return next();
   } catch (err) {
     // Caducado o manipulado: mismo 401, sin detallar el motivo al cliente.
-    return fail(res, 401, 'Token inválido o caducado');
+    return problem(req, res, 401, 'invalid-token', 'Token inválido o caducado',
+      'El token no es válido o ha caducado. Inicia sesión de nuevo.');
   }
 }
 
-/** AUTORIZACIÓN (403): ¿puedes hacerlo? Uso: router.get('/x', verifyJwt, requireRole('ADMIN'), ...) */
-function requireRole(...allowedRoles) {
+/**
+ * AUTORIZACIÓN (403): ¿puede tu rol hacer esto?
+ * Va SIEMPRE después de authGuard (sin identidad no hay rol que evaluar).
+ *
+ * @param {string[]} allowedRoles Roles permitidos, p. ej. ['ADMIN', 'MECANICO'].
+ * @example router.get('/', authGuard, roleGuard(['ADMIN']), ordenesController.listAll);
+ */
+function roleGuard(allowedRoles) {
   return (req, res, next) => {
     if (!req.user || !allowedRoles.includes(req.user.rol)) {
-      return fail(res, 403, 'No tienes permisos para esta acción');
+      return problem(req, res, 403, 'forbidden', 'Acceso denegado',
+        'Tu rol no tiene permisos para esta acción.');
     }
     return next();
   };
 }
 
-module.exports = { verifyJwt, requireRole };
+module.exports = { authGuard, roleGuard };
