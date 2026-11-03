@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-labelledby="gestaller-title">
+  <title id="gestaller-title">GesTaller: emblema de engranaje mecánico</title>
+  <!-- Fondo -->
+  <rect width="96" height="96" rx="20" fill="#0F172A"/>
+  <!-- Dientes del engranaje: 16 dientes (circunferencia r=30 ≈ 188.5 / 16 ≈ 11.8) -->
+  <circle cx="48" cy="48" r="30" fill="none" stroke="#0EA5E9" stroke-width="10" stroke-dasharray="11.78 11.78"/>
+  <!-- Cuerpo del engranaje -->
+  <circle cx="48" cy="48" r="24" fill="#0EA5E9"/>
+  <!-- Eje y núcleo -->
+  <circle cx="48" cy="48" r="10" fill="#0F172A"/>
+  <circle cx="48" cy="48" r="4" fill="#2563EB"/>
+</svg>

@@ -1,17 +1,25 @@
 <div align="center">
 
-# 🚗 GesTaller — SaaS de Gestión de Órdenes y Citas
+<table>
+  <tr>
+    <td align="center" width="100">
+      <img src="docs/assets/gestaller-logo.svg" width="80" height="80" alt="Emblema de GesTaller: engranaje mecánico" />
+    </td>
+    <td align="left">
+      <h1>GESTALLER&nbsp;<code>v0.2.0-sprint2</code></h1>
+      <b>PLATAFORMA TRANSACCIONAL DE GESTIÓN MECÁNICA Y CONTROL DE CITAS</b>
+      <br />
+      <sub><i>CIFP Avilés · 2º DAW Virtual · PIDW2 (Curso 2026/2027)</i></sub>
+    </td>
+  </tr>
+</table>
 
-**Digitaliza el ciclo completo de un taller mecánico: del primer aviso del cliente a la factura, con el precio de cada reparación congelado y trazable.**
-
-<br>
-
-![Sprint](https://img.shields.io/badge/Sprint-Hito%202%20%28Backend%20%26%20DB%29-0EA5E9?style=for-the-badge&logo=git&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-4.x-000000?style=for-the-badge&logo=express&logoColor=white)
-![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Licencia](https://img.shields.io/badge/Licencia-Educativa%20CIFP%20Avil%C3%A9s-2563EB?style=for-the-badge)
+[![Sprint](https://img.shields.io/badge/Sprint-Hito%202%20%28Backend%20%26%20DB%29-0EA5E9?style=for-the-badge&logo=git&logoColor=white)](https://github.com/users/PabloLera92/projects/1)
+[![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Licencia](https://img.shields.io/badge/Licencia-Educativa%20CIFP%20Avil%C3%A9s-2563EB?style=for-the-badge)](https://cifpaviles.sepyc.es/)
 
 <br>
 
