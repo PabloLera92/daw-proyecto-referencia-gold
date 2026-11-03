@@ -1,0 +1,73 @@
+# ============================================================
+# .gitignore canónico — GesTaller (referencia Gold Standard)
+# REGLA: se escribe ANTES del primer commit.
+# ============================================================
+
+# --- Dependencias y artefactos de build ---
+node_modules/
+/vendor/
+/dist/
+/build/
+backend/dist/
+frontend/dist/
+frontend/build/
+coverage/
+.cache/
+.parcel-cache/
+.vite/
+*.tsbuildinfo
+
+# --- SECRETOS (bloqueo estricto) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa*
+credentials.json
+service-account*.json
+secrets/
+
+# --- Base de datos local ---
+*.sqlite
+*.sqlite3
+*.db
+*.sql.gz
+dump*.sql
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Subidas de usuarios (storage local) ---
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# --- Basura de sistema operativo ---
+.DS_Store
+.AppleDouble
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- IDEs y editores ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# --- Temporales ---
+tmp/
+temp/
+*.tmp
+*.bak
