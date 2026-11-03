@@ -325,6 +325,42 @@ Antes de ejecutar un comando, **predice** qué va a pasar; después compruébalo
 
 > **Prohibido:** `git push --force` sobre `develop` o `main`, y trabajar directamente sobre `main`.
 
+> [!NOTE]
+> **¿Por qué el repositorio es público?** (1) En una cuenta gratuita de GitHub, las *branch protection rules* y los *rulesets* **solo se aplican en repositorios públicos** (en los privados exigen GitHub Pro, gratis con el Student Developer Pack): sin protección, un `push` directo o un `push --force` pueden destruir `main` y el historial auditable. (2) Es tu **portfolio técnico**: en marzo empiezas la FCT/Dual y los equipos de selección revisan GitHub. Precisamente por ser público, la ciberhigiene del `.gitignore` no es opcional.
+>
+> **`Closes #N` y la rama por defecto:** GitHub solo cierra el issue automáticamente si el PR se fusiona en la **rama por defecto**. Si es `main`, un PR `feature/*` → `develop` **no** cierra el issue; o bien estableces `develop` como rama por defecto (*Settings → General → Default branch*), o mueves la tarjeta a `Done` a mano. Elige una opción y sé coherente.
+
+<details>
+<summary><b>🛡️ Cómo proteger <code>main</code> con un ruleset</b></summary>
+
+<br>
+
+1. *Settings → Rules → Rulesets → New ruleset → New branch ruleset*.
+2. **Enforcement status:** *Active*. **Target branches:** añade `main` por su nombre.
+3. Reglas mínimas: **Restrict deletions**, **Require a pull request before merging** (0 aprobaciones: GitHub no deja aprobar tu propio PR; se exige el *flujo* por PR) y **Block force pushes**.
+4. **Compruébalo:** intenta un `push` directo a `main`; debe rechazarse. Si no se rechaza, la regla no está activa.
+
+</details>
+
+<details>
+<summary><b>📌 Cómo configurar tu tablero de GitHub Projects en modo Board (columnas estilo Trello)</b></summary>
+
+<br>
+
+Un proyecto nuevo se crea con la vista **Table** (lista). La rúbrica del Hito 1 exige un tablero Kanban de **4 columnas con el nombre exacto**, y eso solo se ve en el layout **Board** agrupado por **Status**.
+
+1. Abre tu proyecto: *tu perfil → Projects → tu tablero*.
+2. En la pestaña de la vista (arriba a la izquierda, «View 1»), pulsa la flecha **▾** → **Layout** → elige **Board** (no *Table*). Alternativa: **+ New view** → *Board*.
+3. Abre otra vez el menú **▾** de la vista → **Column field** → elige **Status**. Cada valor de `Status` es una columna.
+4. Define las columnas con los nombres exactos: pulsa **▾** de la vista → **Fields** (o *Settings → Status*) y edita las opciones: `Todo` pasa a **Product Backlog**; añade **Sprint 2 (Backend & DB)**; deja **In Progress** y **Done**. Ordénalas en ese orden.
+5. Si aparece el aviso «Unsaved changes», pulsa **Save changes**.
+6. Opcional: *⋯ → Workflows* → activa **Item closed → Status: Done** (la tarjeta pasa sola a `Done` al cerrarse el issue).
+7. **Verifica:** abre la URL del tablero en una ventana de incógnito (debe ser pública) y comprueba que ves las 4 columnas, con 1-2 tarjetas como máximo en `In Progress`.
+
+Tablero de este repositorio, ya configurado como modelo: [GitHub Projects — GesTaller](https://github.com/users/PabloLera92/projects/1).
+
+</details>
+
 ---
 
 <a id="roadmap"></a>
