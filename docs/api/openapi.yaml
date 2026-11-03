@@ -1,0 +1,91 @@
+# Esqueleto OpenAPI 3.0 — GesTaller (solo login, como ejemplo guiado).
+# TODO(alumno): documenta el resto de TUS endpoints, siguiendo este patrón.
+openapi: 3.0.3
+info:
+  title: GesTaller API
+  version: 0.2.0
+  description: API REST de referencia del módulo PIDW2 (CIFP Avilés). Los errores siguen RFC 9457.
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Desarrollo local (en producción: tu URL HTTPS)
+
+paths:
+  /auth/login:
+    post:
+      tags: [Autenticación]
+      summary: Inicia sesión y devuelve un JWT
+      security: []            # ruta pública: sin token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+      responses:
+        '200':
+          description: Login correcto
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LoginResponse' }
+        '401':
+          description: Credenciales inválidas
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetails' }
+        '422':
+          description: Validación fallida (email o contraseña ausentes)
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetails' }
+
+components:
+  securitySchemes:
+    bearerAuth:               # permite probar rutas protegidas desde Swagger UI
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:    { type: string, format: email }
+        password: { type: string, minLength: 8 }
+    LoginResponse:
+      type: object
+      properties:
+        success: { type: boolean, example: true }
+        message: { type: string, example: Login correcto }
+        data:
+          type: object
+          properties:
+            token:     { type: string }
+            tokenType: { type: string, example: Bearer }
+            expiresIn: { type: string, example: 1h }
+            user:
+              type: object
+              properties:
+                id:     { type: integer }
+                nombre: { type: string }
+                email:  { type: string }
+                rol:    { type: string, enum: [ADMIN, MECANICO, CLIENTE] }
+    ProblemDetails:           # RFC 9457
+      type: object
+      required: [type, title, status, detail, instance, timestamp]
+      properties:
+        type:      { type: string, format: uri }
+        title:     { type: string }
+        status:    { type: integer }
+        detail:    { type: string }
+        instance:  { type: string }
+        timestamp: { type: string, format: date-time }
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:   { type: string }
+              message: { type: string }
+
+# Para proteger un endpoint, añade en su operación:
+#   security:
+#     - bearerAuth: []

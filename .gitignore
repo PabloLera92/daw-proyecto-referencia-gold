@@ -1,44 +1,94 @@
-# ============================================================
-# .gitignore canónico — GesTaller (referencia Gold Standard)
-# REGLA: se escribe ANTES del primer commit.
-# ============================================================
+# ==============================================================================
+# .gitignore canónico — GesTaller (repositorio de referencia Gold Standard)
+# ==============================================================================
+# NOTAS DE ARQUITECTURA PARA EL ALUMNO
+#
+#  1. Este archivo se escribe ANTES del primer commit. Después ya es tarde:
+#     .gitignore solo afecta a ficheros que Git todavía NO sigue (ver bloque
+#     "COMANDOS DE EMERGENCIA" al final).
+#  2. Las reglas se evalúan en orden y GANA LA ÚLTIMA que coincide. Por eso las
+#     excepciones (!) van siempre DESPUÉS de la regla general que corrigen.
+#  3. No copies este archivo a ciegas: ajústalo a TU stack (Laravel ignora
+#     /vendor, Python ignora __pycache__/ y .venv/, etc.) y sé capaz de explicar,
+#     regla a regla, qué protege y por qué (Reto 1 del Manual de Git).
+#
+# Sintaxis de patrones usada aquí:
+#   dir/     barra FINAL  -> solo directorios con ese nombre, a cualquier profundidad
+#   *.ext    comodín      -> cualquier fichero con esa extensión, en cualquier carpeta
+#   /dir     barra INICIAL-> anclado a la RAÍZ del repo (NO afecta a subcarpetas)
+#   !patrón  excepción    -> vuelve a incluir lo excluido por una regla anterior
+# ==============================================================================
 
-# --- Dependencias y artefactos de build ---
+
+# ------------------------------------------------------------------------------
+# 1. DEPENDENCIAS Y ARTEFACTOS DE BUILD
+# ------------------------------------------------------------------------------
+# POR QUÉ: son regenerables (package.json las DECLARA, `npm install` las instala)
+# y contienen binarios compilados para TU sistema operativo: lo que funciona en
+# tu Windows puede fallar en el Linux de Render. Subirlas rompe la portabilidad,
+# multiplica el tamaño del repo y llena los diffs de ruido.
+# SÍ se versiona package-lock.json: fija las versiones exactas para todos.
+#
+# TRAMPA: este repo es un monorepo (backend/ + frontend/). Un `/node_modules`
+# anclado a la raíz NO ignoraría backend/node_modules ni frontend/node_modules.
+# Por eso se usa `node_modules/` (sin barra inicial): cualquier profundidad.
 node_modules/
-/vendor/
-/dist/
-/build/
-backend/dist/
-frontend/dist/
-frontend/build/
+vendor/
+dist/
+build/
 coverage/
 .cache/
 .parcel-cache/
 .vite/
 *.tsbuildinfo
 
-# --- SECRETOS (bloqueo estricto) ---
+
+# ------------------------------------------------------------------------------
+# 2. SECRETOS (BLOQUEO ESTRICTO)
+# ------------------------------------------------------------------------------
+# POR QUÉ: GitHub es público y existen robots que rastrean credenciales nuevas
+# en cuestión de minutos. Un secreto que llega a un commit publicado se da por
+# COMPROMETIDO: la única respuesta eficaz es rotarlo (ver emergencia al final).
+#
+# `.env` + `.env.*` cubren .env, .env.local, .env.production, etc. Es lo mismo
+# que `.env*`, pero ese patrón también capturaría .env.example, que SÍ debe
+# versionarse (es el contrato de entorno). De ahí la excepción posterior.
 .env
 .env.*
 !.env.example
+
+# Certificados y claves privadas: la clave privada nunca sale de tu máquina.
 *.pem
 *.key
 *.crt
 *.p12
 *.pfx
 id_rsa*
+
+# Credenciales de servicios cloud / APIs descargadas como JSON.
 credentials.json
 service-account*.json
 secrets/
 
-# --- Base de datos local ---
+
+# ------------------------------------------------------------------------------
+# 3. BASE DE DATOS LOCAL
+# ------------------------------------------------------------------------------
+# POR QUÉ: el esquema se reconstruye con MIGRACIONES y el contenido con SEEDERS
+# (Hito 2). Un volcado .sql o una base de datos .sqlite versionados son justo lo
+# que la rúbrica prohíbe y, además, pueden contener datos personales (RGPD).
 *.sqlite
 *.sqlite3
 *.db
 *.sql.gz
 dump*.sql
 
-# --- Logs ---
+
+# ------------------------------------------------------------------------------
+# 4. LOGS
+# ------------------------------------------------------------------------------
+# POR QUÉ: son ruido que cambia en cada ejecución y pueden contener tokens,
+# emails o trazas con datos sensibles.
 logs/
 *.log
 npm-debug.log*
@@ -46,11 +96,23 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# --- Subidas de usuarios (storage local) ---
+
+# ------------------------------------------------------------------------------
+# 5. SUBIDAS DE USUARIOS (STORAGE LOCAL)
+# ------------------------------------------------------------------------------
+# POR QUÉ: los ficheros subidos por usuarios son DATOS, no código.
+# TRAMPA (muy frecuente): si escribes `backend/uploads/` Git ignora la carpeta
+# entera y no llega a evaluar la excepción. Hay que ignorar su CONTENIDO (`/*`)
+# y después re-incluir el marcador `.gitkeep`, que mantiene la carpeta en el repo.
 backend/uploads/*
 !backend/uploads/.gitkeep
 
-# --- Basura de sistema operativo ---
+
+# ------------------------------------------------------------------------------
+# 6. BASURA DEL SISTEMA OPERATIVO
+# ------------------------------------------------------------------------------
+# POR QUÉ: ficheros que genera tu SO, no tu proyecto. Si los subes, ensucias el
+# historial de todo el equipo con archivos que no les sirven.
 .DS_Store
 .AppleDouble
 Thumbs.db
@@ -58,7 +120,13 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# --- IDEs y editores ---
+
+# ------------------------------------------------------------------------------
+# 7. IDEs Y EDITORES
+# ------------------------------------------------------------------------------
+# POR QUÉ: la configuración del editor es personal. Excepción deliberada:
+# .vscode/extensions.json (extensiones recomendadas) es útil para todo el equipo.
+# Obsérvese `.vscode/*` + `!...`, NO `.vscode/` + `!...` (misma trampa que uploads).
 .idea/
 .vscode/*
 !.vscode/extensions.json
@@ -66,8 +134,50 @@ $RECYCLE.BIN/
 *.swo
 *~
 
-# --- Temporales ---
+
+# ------------------------------------------------------------------------------
+# 8. TEMPORALES
+# ------------------------------------------------------------------------------
 tmp/
 temp/
 *.tmp
 *.bak
+
+
+# ==============================================================================
+# COMANDOS DE EMERGENCIA: «HE COMITEADO UN FICHERO SENSIBLE»
+# ==============================================================================
+# Por qué añadirlo ahora al .gitignore NO basta: .gitignore solo actúa sobre
+# ficheros no seguidos, y el tuyo ya está en el índice. Y por qué borrarlo en un
+# commit posterior tampoco basta: el commit antiguo sigue intacto en la historia
+# y cualquiera puede leerlo con `git show <hash>:.env`.
+#
+# Secuencia de contingencia (entiende cada paso ANTES de ejecutarlo):
+#
+#   PASO 1 · ROTAR EL SECRETO (el único paso que neutraliza el daño)
+#            Cambia la contraseña de la BD, genera un JWT_SECRET nuevo, revoca la
+#            API key. Si te saltas este paso, el repo sigue comprometido.
+#
+#   PASO 2 · Comprueba que la regla existe y funciona:
+#              git check-ignore -v .env
+#
+#   PASO 3 · Desindexar SIN borrar tu copia local (`--cached` es la clave:
+#            sin él borrarías también el fichero de tu disco):
+#              git rm --cached .env
+#            Para una carpeta entera:
+#              git rm -r --cached ruta/carpeta/
+#
+#   PASO 4 · Commit explícito y push:
+#              git commit -m "chore(security): untrack .env and rotate credentials"
+#              git push
+#            El fichero desaparece del ESTADO ACTUAL, no de los commits antiguos.
+#
+#   PASO 5 · Avisa al tutor. Reescribir la historia (git filter-repo / BFG) es
+#            DESTRUCTIVO sobre ramas compartidas: solo con supervisión.
+#
+# Diagnóstico: ¿se coló algún .env en algún momento del historial?
+#              git log --all --oneline -- .env
+#              git ls-files | grep -E "(^|/)\.env$"      # lo que Git sigue AHORA
+#
+# Penalización oficial (Rúbrica Hito 2): secretos reales en cualquier punto del
+# historial => dimensión «Seguridad: JWT y RBAC» = 0 y NO-GO, aunque los borres.
