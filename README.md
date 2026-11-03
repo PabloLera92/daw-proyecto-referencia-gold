@@ -1,60 +1,99 @@
-# GesTaller
+<div align="center">
 
-> Plataforma SaaS de gestión de citas y órdenes de reparación para talleres mecánicos.
+# 🚗 GesTaller — SaaS de Gestión de Órdenes y Citas
 
-![Sprint](https://img.shields.io/badge/Sprint-2-blue)
-![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?logo=node.js&logoColor=white)
-![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?logo=react&logoColor=black)
-![DB](https://img.shields.io/badge/DB-MySQL%208-4479A1?logo=mysql&logoColor=white)
-![Licencia](https://img.shields.io/badge/Licencia-CIFP%20Avil%C3%A9s%20(uso%20acad%C3%A9mico)-lightgrey)
+**Digitaliza el ciclo completo de un taller mecánico: del primer aviso del cliente a la factura, con el precio de cada reparación congelado y trazable.**
 
-> **Repositorio de referencia (Gold Standard)** del módulo PIDW2. Muestra la estructura, la documentación y las convenciones mínimas exigidas en los Hitos 1 y 2. **No contiene la lógica de negocio completa** a propósito: el objetivo es que aprendas a *leer* una arquitectura, no a copiarla. Cada archivo lleva bloques «NOTAS DE ARQUITECTURA PARA EL ALUMNO» que explican el porqué de cada decisión.
+<br>
 
-## Ficha técnica
+![Sprint](https://img.shields.io/badge/Sprint-Hito%202%20%28Backend%20%26%20DB%29-0EA5E9?style=for-the-badge&logo=git&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-000000?style=for-the-badge&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Licencia](https://img.shields.io/badge/Licencia-Educativa%20CIFP%20Avil%C3%A9s-2563EB?style=for-the-badge)
 
-| Campo       | Valor                                                                 |
-|-------------|-----------------------------------------------------------------------|
-| Ciclo       | Desarrollo de Aplicaciones Web (2º DAW, modalidad virtual)            |
-| Módulo      | Proyecto Intermodular (PIDW2)                                         |
-| Autor       | Alumno Ejemplo (ficticio)                                             |
-| Tutor       | Pablo Lera Menéndez                                                   |
-| Centro      | CIFP Avilés — Curso 2026/2027                                         |
-| Tablero     | [GitHub Projects — GesTaller (enlace simulado)](https://github.com/users/alumno-ejemplo/projects/1) |
-| Documentos  | [Anteproyecto](Anteproyecto.md) · [DER](docs/der.md) · [Contrato API REST](docs/contrato_api_rest.md) · [Pruebas de API](docs/api/README.md) |
+<br>
 
-## Resumen ejecutivo
+[ [📖 Propuesta de Valor](#propuesta) ] · [ [👥 Roles RBAC](#roles) ] · [ [🏗️ Arquitectura](#arquitectura) ] · [ [🔌 API REST](#api) ] · [ [⚙️ Puesta en Marcha](#arranque) ] · [ [🌿 Gitflow](#gitflow) ] · [ [📊 Roadmap](#roadmap) ]
 
-GesTaller digitaliza el ciclo completo de un taller mecánico independiente: la reserva de citas, la apertura de la orden de reparación, el registro de servicios y piezas empleados y el seguimiento del estado por parte del cliente.
+</div>
 
-La propuesta de valor es triple. El cliente consulta el estado de su vehículo sin llamar al taller. El mecánico registra el trabajo realizado desde cualquier dispositivo. El administrador obtiene trazabilidad económica, ya que el precio de cada línea de la orden se congela en el momento de su creación.
+<br>
 
-## Roles y permisos (RBAC)
+> [!IMPORTANT]
+> **Repositorio de referencia (Gold Standard)** · CIFP Avilés — 2º DAW Virtual — Curso 2026/2027 · Módulo PIDW2.
+> Tutoría: **Pablo Lera Menéndez**. Backlog y seguimiento: [Issues e hitos del repositorio](https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues) <!-- TODO: sustituir por la URL https://github.com/users/PabloLera92/projects/<N> cuando exista el tablero de GitHub Projects -->.
+>
+> Muestra la estructura, la documentación y las convenciones mínimas exigidas en los Hitos 1 y 2. **No contiene la lógica de negocio completa** a propósito: el objetivo es que aprendas a *leer* una arquitectura, no a copiarla. Cada archivo lleva bloques «NOTAS DE ARQUITECTURA PARA EL ALUMNO».
 
-| Funcionalidad                          | Público (anónimo) | Administrador | Mecánico/Técnico | Cliente/Socio |
-|----------------------------------------|:-----------------:|:-------------:|:----------------:|:-------------:|
-| Consultar catálogo de servicios        | 👁️ lectura        | ✅            | 👁️ lectura       | 👁️ lectura    |
-| Registrarse / iniciar sesión           | ✅                | —             | —                | —             |
-| Gestionar usuarios y roles             | ❌                | ✅            | ❌               | ❌            |
-| Gestionar catálogo de servicios (CRUD) | ❌                | ✅            | ❌               | ❌            |
-| Ver agenda completa de citas           | ❌                | ✅            | ✅ (propias)     | ❌            |
-| Solicitar / cancelar cita              | ❌                | ✅            | ❌               | ✅ (propias)  |
-| Crear y actualizar órdenes             | ❌                | ✅            | ✅ (asignadas)   | ❌            |
-| Consultar estado de órdenes            | ❌                | ✅            | ✅               | ✅ (propias)  |
-| Registrar vehículos                    | ❌                | ✅            | ✅               | ✅ (propios)  |
+| Campo      | Valor                                                                                       |
+|------------|---------------------------------------------------------------------------------------------|
+| Ciclo      | Desarrollo de Aplicaciones Web (2º DAW, modalidad virtual)                                  |
+| Módulo     | Proyecto Intermodular (PIDW2)                                                               |
+| Autor      | Alumno Ejemplo (ficticio)                                                                   |
+| Tutor      | Pablo Lera Menéndez                                                                         |
+| Documentos | [Anteproyecto](Anteproyecto.md) · [DER](docs/der.md) · [Contrato API](docs/contrato_api_rest.md) · [Pruebas de API](docs/api/README.md) |
 
-> El Hito 1 exige diferenciar **Público, Usuario y Administrador**. Aquí el rol «Usuario» se concreta en dos perfiles del negocio (Mecánico y Cliente). Si tu dominio solo tiene un perfil de usuario registrado, usa solo tres columnas: no inventes roles para parecer más complejo.
+---
 
-## Pila tecnológica y justificación
+<a id="propuesta"></a>
+## 📖 Propuesta de valor
 
-| Capa          | Tecnología              | Justificación                                                                 |
-|---------------|-------------------------|-------------------------------------------------------------------------------|
-| Backend       | Node.js 20 + Express    | Un único lenguaje en toda la pila; ecosistema maduro; arquitectura en capas explícita. |
-| Frontend      | React 18 + Vite         | SPA desacoplada del backend; arranque rápido; componentes reutilizables.      |
-| Base de datos | MySQL 8 + Knex (migraciones) | Modelo transaccional con integridad referencial normalizado hasta 3FN; el esquema se versiona con migraciones, nunca con volcados `.sql`. |
-| Autenticación | JWT + bcrypt            | API sin estado; contraseñas almacenadas únicamente como hash.                 |
-| Contrato      | REST + JSON             | Errores en formato RFC 9457 documentados en `docs/contrato_api_rest.md`.      |
+Los talleres mecánicos independientes gestionan hoy las citas por teléfono y las órdenes de reparación en papel u hojas de cálculo, lo que provoca citas solapadas, presupuestos que no coinciden con la factura final y llamadas constantes de clientes que preguntan por el estado de su vehículo. GesTaller centraliza la agenda de citas, abre la orden de reparación a partir de cada cita y registra los servicios y piezas empleados en una tabla intermedia que **congela el precio pactado** de cada línea, de modo que una modificación posterior de tarifas no altera las órdenes ya cerradas. El cliente consulta el estado de su vehículo desde el móvil, el mecánico anota el trabajo sin papel y el administrador obtiene trazabilidad económica completa.
 
-## Estructura del repositorio
+---
+
+<a id="roles"></a>
+## 👥 Roles y permisos (RBAC)
+
+| Rol                | Alcance / Privilegios                                                                 | Vista principal                         |
+|--------------------|---------------------------------------------------------------------------------------|-----------------------------------------|
+| 🌐 **Público**     | Consulta el catálogo de servicios (solo lectura), se registra e inicia sesión         | Landing y catálogo de servicios         |
+| 🛡️ **Administrador** | Gestiona usuarios, catálogo, agenda global, órdenes y facturas. Acceso total          | Dashboard con agenda y facturación      |
+| 🔧 **Mecánico**    | Ve su agenda, abre y actualiza las órdenes **asignadas** y registra las líneas de trabajo | Agenda del día y órdenes asignadas      |
+| 🧑 **Cliente**     | Registra sus vehículos, solicita y cancela **sus** citas y consulta **sus** órdenes   | Panel personal: vehículos, citas, órdenes |
+
+> El Hito 1 exige diferenciar **Público, Usuario y Administrador**. Aquí «Usuario» se concreta en Mecánico y Cliente. Si tu dominio solo tiene un perfil de usuario registrado, usa tres roles: no inventes más para parecer más complejo.
+
+---
+
+<a id="arquitectura"></a>
+## 🏗️ Arquitectura en capas
+
+```mermaid
+flowchart LR
+    A["🌐 Petición HTTP"] --> B["🛣️ Rutas / Endpoints"]
+    B --> C["🛡️ Middlewares<br/>Auth JWT + RBAC"]
+    C --> D["🎛️ Controladores"]
+    D --> E["⚙️ Servicios<br/>Lógica de negocio"]
+    E --> F["🗂️ Modelos / ORM<br/>(3FN)"]
+    F --> G[("🐬 MySQL 8")]
+    C -. "401 / 403" .-> H["⛔ Error RFC 9457"]
+    D -. "422" .-> H
+    E -. "409 / 404" .-> H
+    H --> I["📤 Respuesta JSON"]
+    G ~~~ I
+
+    classDef layer fill:#EFF6FF,stroke:#2563EB,color:#0F172A;
+    classDef err fill:#FEF2F2,stroke:#DC2626,color:#7F1D1D;
+    classDef db fill:#ECFDF5,stroke:#16A34A,color:#14532D;
+    class B,C,D,E,F layer;
+    class H err;
+    class G db;
+```
+
+| Capa            | Responsabilidad única                                                | Archivo de ejemplo                          |
+|-----------------|----------------------------------------------------------------------|---------------------------------------------|
+| Rutas           | Asocian verbo HTTP + URI con middlewares y controlador               | `backend/src/routes/auth.routes.js`         |
+| Middlewares     | Validan token (401), rol (403) y datos antes del controlador         | `backend/src/middlewares/jwt.middleware.js` |
+| Controladores   | Validan la entrada HTTP, llaman al servicio y fijan el código de estado | `backend/src/controllers/auth.controller.js` |
+| Servicios       | Lógica de negocio pura y orquestación; sin `req` ni `res`            | `backend/src/services/auth.service.js`      |
+| Modelos         | Único punto de acceso a la base de datos (consultas parametrizadas)  | `backend/src/models/usuario.model.js`       |
+
+**Pila tecnológica:** Node.js 20 + Express (un solo lenguaje en toda la pila) · React 18 + Vite (SPA desacoplada) · MySQL 8 con migraciones Knex (esquema versionado, nunca volcados `.sql`) · JWT + bcrypt (API sin estado, contraseñas solo como hash).
+
+### Estructura del repositorio
 
 ```text
 daw-proyecto-referencia-gold/
@@ -63,7 +102,7 @@ daw-proyecto-referencia-gold/
 │   └── PULL_REQUEST_TEMPLATE.md       # PR con "Closes #N" y checklist
 ├── docs/
 │   ├── der.md                         # DER Mermaid + 3FN + diccionario de datos
-│   ├── contrato_api_rest.md           # formato de respuestas y códigos HTTP
+│   ├── contrato_api_rest.md           # formatos de respuesta y códigos HTTP
 │   └── api/                           # evidencias de pruebas (OpenAPI / Postman)
 ├── backend/                           # API en capas (ver backend/src)
 ├── frontend/                          # SPA desacoplada
@@ -73,9 +112,41 @@ daw-proyecto-referencia-gold/
 └── README.md
 ```
 
-## Puesta en marcha en local
+---
 
-Requisitos: Node.js ≥ 20, MySQL 8 y Git. Crea antes en MySQL una base de datos vacía y un usuario de aplicación con permisos solo sobre ella (nunca `root`).
+<a id="api"></a>
+## 🔌 Contrato de API REST
+
+Base URL: `/api/v1` · Autenticación: `Authorization: Bearer <token>` · Éxito: `{ success, data, message }` · Errores 4xx/5xx: [RFC 9457](docs/contrato_api_rest.md).
+
+| Método | Endpoint URI | Rol mínimo requerido | Éxito | Descripción de la operación |
+|:------:|--------------|----------------------|:-----:|-----------------------------|
+| ![GET](https://img.shields.io/badge/GET-16A34A?style=flat-square) | `/api/v1/health` | 🌐 Público | `200` | Comprobación de salud del servicio |
+| ![POST](https://img.shields.io/badge/POST-2563EB?style=flat-square) | `/api/v1/auth/register` | 🌐 Público | `201` | Registra un cliente (hash bcrypt, validación 422) |
+| ![POST](https://img.shields.io/badge/POST-2563EB?style=flat-square) | `/api/v1/auth/login` | 🌐 Público | `200` | Autentica y devuelve un JWT firmado |
+| ![GET](https://img.shields.io/badge/GET-16A34A?style=flat-square) | `/api/v1/auth/me` | 🔑 Autenticado | `200` | Perfil del usuario del token (sin hash) |
+| ![GET](https://img.shields.io/badge/GET-16A34A?style=flat-square) | `/api/v1/servicios` | 🌐 Público | `200` | Catálogo de servicios activos |
+| ![POST](https://img.shields.io/badge/POST-2563EB?style=flat-square) | `/api/v1/servicios` | 🛡️ Administrador | `201` | Crea un servicio del catálogo |
+| ![PUT](https://img.shields.io/badge/PUT-EA580C?style=flat-square) | `/api/v1/servicios/:id` | 🛡️ Administrador | `200` | Modifica un servicio (precio base, estado) |
+| ![DELETE](https://img.shields.io/badge/DELETE-DC2626?style=flat-square) | `/api/v1/servicios/:id` | 🛡️ Administrador | `204` | Desactiva un servicio (borrado lógico) |
+| ![POST](https://img.shields.io/badge/POST-2563EB?style=flat-square) | `/api/v1/citas` | 🧑 Cliente | `201` | Solicita una cita (`409` si la franja está ocupada) |
+| ![GET](https://img.shields.io/badge/GET-16A34A?style=flat-square) | `/api/v1/citas` | 🧑 Cliente (propias) | `200` | Lista las citas del cliente; el administrador ve todas |
+| ![POST](https://img.shields.io/badge/POST-2563EB?style=flat-square) | `/api/v1/ordenes` | 🔧 Mecánico | `201` | Abre una orden con sus líneas, en una transacción |
+| ![GET](https://img.shields.io/badge/GET-16A34A?style=flat-square) | `/api/v1/ordenes/:id` | 🔑 Autenticado (titular) | `200` | Detalle de una orden; `403`/`404` si no es tuya |
+| ![PUT](https://img.shields.io/badge/PUT-EA580C?style=flat-square) | `/api/v1/ordenes/:id` | 🔧 Mecánico / 🛡️ Administrador | `200` | Actualiza el estado de la orden |
+
+> [!NOTE]
+> El esqueleto de este repositorio **implementa solo** `health` y el bloque `auth`; el resto de filas documentan el contrato de diseño del Hito 2. Los códigos de error (`400`, `401`, `403`, `404`, `409`, `422`, `500`) y sus ejemplos están en [`docs/contrato_api_rest.md`](docs/contrato_api_rest.md).
+
+---
+
+<a id="arranque"></a>
+## ⚙️ Puesta en marcha en local
+
+> [!WARNING]
+> **Prohibido subir secretos.** El archivo `.env` (claves JWT, contraseñas de BD, API keys) **nunca** se versiona: está en el `.gitignore` desde el primer commit. Si lo subes por error, **borrarlo no basta**: rota la credencial de inmediato y sigue los «Comandos de emergencia» del [`.gitignore`](.gitignore). Un secreto real en el historial implica NO-GO y 0 puntos en la dimensión de seguridad del Hito 2.
+
+**Requisitos:** Node.js ≥ 20 · MySQL 8 (con una base de datos vacía y un usuario de aplicación con permisos solo sobre ella; nunca `root`) · Git.
 
 ```bash
 # 1. Clonar el repositorio
@@ -86,7 +157,7 @@ cd daw-proyecto-referencia-gold
 git checkout develop
 
 # 3. Configurar variables de entorno (valores propios, nunca al repo)
-cp .env.example .env     # edita DB_PASSWORD y JWT_SECRET con valores propios
+cp .env.example .env     # edita DB_PASSWORD y JWT_SECRET
 openssl rand -base64 32  # úsalo como JWT_SECRET
 
 # 4. Instalar dependencias
@@ -98,15 +169,95 @@ cd ../backend
 npm run db:reset
 
 # 6. Arrancar (dos terminales)
-npm run dev                  # backend  -> http://localhost:3000/api/v1/health
-cd ../frontend && npm run dev   # frontend -> http://localhost:5173
+npm run dev                      # backend  -> http://localhost:3000/api/v1/health
+cd ../frontend && npm run dev    # frontend -> http://localhost:5173
 ```
 
-> Un único `.env` en la raíz alimenta backend (`dotenv`) y frontend (`envDir` de Vite). Solo las variables con prefijo `VITE_` llegan al navegador.
->
-> **Comprueba tu propio README:** clona tu repo en una carpeta vacía y sigue tus pasos al pie de la letra. Si algo falla, tu guía de arranque está incompleta. Un evaluador no te va a preguntar cómo se arranca.
+Un único `.env` en la raíz alimenta backend (`dotenv`) y frontend (`envDir` de Vite). Solo las variables con prefijo `VITE_` llegan al navegador.
 
-## Estrategia de ramas (Gitflow simplificado)
+<details>
+<summary><b>🔍 Ver plantilla de variables de entorno (.env.example)</b></summary>
+
+<br>
+
+Resumen del contrato; la versión completa y comentada está en [`.env.example`](.env.example). Todos los valores son **ficticios**.
+
+```bash
+# 1. ENTORNO Y SERVIDOR
+NODE_ENV=development                 # development | test | production
+PORT=3000                            # puerto interno del backend
+CORS_ORIGIN=http://localhost:5173    # URL COMPLETA del frontend; nunca "*" en producción
+
+# 2. BASE DE DATOS (MySQL)
+DB_HOST=127.0.0.1                    # solo el host, sin protocolo ni puerto
+DB_PORT=3306
+DB_NAME=gestaller_dev
+DB_USER=gestaller_user               # nunca root
+DB_PASSWORD=change_me_dummy_password # valor ficticio: usa uno propio en tu .env
+
+# 3. AUTENTICACIÓN
+JWT_SECRET=replace_with_openssl_rand_base64_32_output_never_commit_the_real_one
+JWT_EXPIRES_IN=1h                    # máximo 2 h (Hito 2)
+BCRYPT_SALT_ROUNDS=12                # mínimo 10
+
+# 5. FRONTEND (Vite) — todo lo que lleva VITE_ es PÚBLICO
+VITE_API_URL=http://localhost:3000/api/v1
+```
+
+Genera un secreto de 32 bytes con `openssl rand -base64 32`. El backend se niega a arrancar si falta una variable obligatoria o si `JWT_SECRET` tiene menos de 32 caracteres.
+
+</details>
+
+<details>
+<summary><b>🛠️ Comandos frecuentes y resolución de problemas</b></summary>
+
+<br>
+
+**Verificación diaria**
+
+```bash
+git status                                   # ¿qué tengo pendiente y en qué rama estoy?
+git log --oneline --graph --all              # ¿cómo está el árbol de commits?
+git check-ignore -v .env                     # ¿qué regla ignora mi .env?
+git ls-files | grep -E "(^|/)\.env$"         # debe NO devolver nada
+git ls-files '*.sql'                         # debe NO devolver nada (sin volcados .sql)
+```
+
+**Base de datos**
+
+```bash
+npm run db:reset      # rollback + migrate + seed: reconstruye todo desde cero
+npm run db:seed       # vuelve a cargar solo los seeders (deben ser idempotentes)
+```
+
+**Probar endpoints**
+
+```bash
+curl -s http://localhost:3000/api/v1/health
+curl -s -X POST http://localhost:3000/api/v1/auth/login \
+     -H "Content-Type: application/json" \
+     -d '{"email":"user1@example.org","password":"<tu-password-de-prueba>"}'
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000/api/v1/auth/me   # sin token: 401
+```
+
+**Problemas habituales**
+
+| Síntoma                                         | Causa probable                                  | Solución                                              |
+|-------------------------------------------------|-------------------------------------------------|-------------------------------------------------------|
+| `Missing environment variables: ...`            | No existe `.env` o falta una variable           | `cp .env.example .env` y rellénalo                    |
+| `JWT_SECRET must be at least 32 characters`     | Secreto demasiado corto                         | `openssl rand -base64 32`                             |
+| `ECONNREFUSED` al migrar                        | MySQL parado o `DB_HOST`/`DB_PORT` incorrectos  | Arranca MySQL y revisa el `.env`                      |
+| `Access denied for user`                        | Usuario o contraseña de BD erróneos             | Revisa `DB_USER` / `DB_PASSWORD` y sus permisos       |
+| `401` en una ruta privada                       | Falta `Authorization: Bearer <token>` o caducó  | Inicia sesión de nuevo y reenvía el token             |
+| Error de CORS en el navegador                   | `CORS_ORIGIN` no coincide con la URL del front  | Pon la URL exacta (con protocolo, sin barra final)    |
+| `push` rechazado a `main`                       | Es lo correcto: `main` está protegida           | Crea una rama `feature/*` y abre un PR a `develop`    |
+
+</details>
+
+---
+
+<a id="gitflow"></a>
+## 🌿 Estrategia de ramas (Gitflow simplificado)
 
 ```mermaid
 gitGraph
@@ -129,119 +280,128 @@ gitGraph
    merge develop id: "release PR" tag: "hito-2"
 ```
 
-| Rama          | Función                                   | Reglas                                            |
-|---------------|-------------------------------------------|---------------------------------------------------|
-| `main`        | Código entregado y desplegable            | **Inmutable**: solo recibe PR desde `develop` al cerrar un hito. Protegida (sin push directo ni force-push). Los tags de entrega se crean aquí. |
-| `develop`     | Integración del trabajo del sprint        | Recibe `feature/*` mediante Pull Request.         |
-| `feature/*`   | Una historia de usuario = una rama        | Nombre: `feature/hu-<nº>-<verbo-objeto>` (`feature/hu-03-auth-jwt`). Nace de `develop` y **se borra tras el merge**. |
+| Rama        | Función                              | Reglas                                                                                  |
+|-------------|--------------------------------------|-----------------------------------------------------------------------------------------|
+| `main`      | Código entregado y desplegable       | **Inmutable**: solo PR desde `develop` al cerrar un hito. Protegida. Aquí se crean los tags |
+| `develop`   | Integración del trabajo del sprint   | Recibe `feature/*` mediante Pull Request                                                |
+| `feature/*` | Una historia de usuario = una rama   | `feature/hu-<nº>-<verbo-objeto>`. Nace de `develop` y **se borra tras el merge**        |
 
-**Tags de entrega:** `hito-1`, `hito-2`, `v0.3.0-mvp`… sobre `main` (`git tag -a hito-2 -m "..." && git push origin hito-2`).
-**Commits:** [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`, `test:`). El tipo siempre en inglés; la descripción, en infinitivo (español) o imperativo (inglés), sin mezclar idiomas. El Hito 2 exige **≥ 80 %**.
+> [!TIP]
+> **Conventional Commits:** `<tipo>(<ámbito>): <descripción en infinitivo o imperativo>`. El tipo siempre en inglés y sin mezclar idiomas en la descripción. El Hito 2 exige **≥ 80 %** de commits con este formato.
+>
+> ```text
+> feat(auth): implement login with JWT        ← añade funcionalidad (sube MINOR)
+> fix(citas): return 409 when the slot is taken ← corrige un error (sube PATCH)
+> docs(readme): document local setup           ← solo documentación
+> ```
+> Antipatrones que suspenden: `cambios`, `arreglado`, `Update README.md`, `.`, `prueba`.
 
 ### Comandos diarios de Git
 
 Antes de ejecutar un comando, **predice** qué va a pasar; después compruébalo con `git status` o `git log --oneline --graph --all`.
 
-| Qué quiero hacer                                  | Comando                                                | Qué debo comprobar                                  |
-|---------------------------------------------------|--------------------------------------------------------|-----------------------------------------------------|
-| Empezar el día con `develop` actualizado          | `git switch develop && git pull`                       | «Fast-forward» o «Already up to date»               |
-| Crear la rama de una historia                     | `git switch -c feature/hu-05-crear-cita`               | `git status` muestra la rama nueva                  |
-| Ver qué he cambiado                               | `git status` · `git diff` · `git diff --staged`        | Distingue cambios sin preparar y preparados         |
-| Preparar y confirmar un cambio lógico             | `git add <ficheros>` · `git commit -m "feat(citas): crear cita"` | Un commit = un cambio. Nunca `git add .` a ciegas   |
-| Sacar un fichero del área de preparación          | `git restore --staged <fichero>`                       | El fichero no se toca; solo deja de estar preparado |
-| Subir mi rama por primera vez                     | `git push -u origin feature/hu-05-crear-cita`          | Aparece la rama en GitHub                           |
-| Abrir el Pull Request hacia `develop`             | `gh pr create --base develop` (o desde la web)         | Descripción con `Closes #<issue>`                   |
-| Traer a mi rama lo último de `develop`            | `git switch develop && git pull && git switch -` → `git merge develop` | `git pull` solo actualiza `develop`, no tu rama     |
-| Borrar la rama tras fusionar el PR                | `git branch -d feature/hu-05-crear-cita`               | La rama efímera muere; la historia queda en `develop` |
-| Cerrar un hito                                    | PR `develop` → `main` y después `git tag -a hito-2 -m "..."` | El tag apunta a `main`                              |
-| ¿Se coló un `.env` en el historial?               | `git log --all --oneline -- .env`                      | Sin salida = limpio                                 |
-| Me equivoqué y subí un secreto                    | Ver «Comandos de emergencia» en [`.gitignore`](.gitignore) | **Primero rotar el secreto**                        |
+| Qué quiero hacer                           | Comando                                                       | Qué debo comprobar                                  |
+|--------------------------------------------|---------------------------------------------------------------|-----------------------------------------------------|
+| Empezar el día con `develop` actualizado   | `git switch develop && git pull`                              | «Fast-forward» o «Already up to date»               |
+| Crear la rama de una historia              | `git switch -c feature/hu-05-crear-cita`                      | `git status` muestra la rama nueva                  |
+| Ver qué he cambiado                        | `git status` · `git diff` · `git diff --staged`               | Cambios sin preparar frente a preparados            |
+| Preparar y confirmar un cambio lógico      | `git add <ficheros>` · `git commit -m "feat(citas): crear cita"` | Un commit = un cambio. Nunca `git add .` a ciegas |
+| Sacar un fichero del área de preparación   | `git restore --staged <fichero>`                              | El fichero no se toca                               |
+| Subir mi rama por primera vez              | `git push -u origin feature/hu-05-crear-cita`                 | Aparece la rama en GitHub                           |
+| Abrir el Pull Request hacia `develop`      | `gh pr create --base develop` (o desde la web)                | Descripción con `Closes #<issue>`                   |
+| Traer a mi rama lo último de `develop`     | `git switch develop && git pull && git switch -` → `git merge develop` | `git pull` solo actualiza `develop`, no tu rama |
+| Borrar la rama tras fusionar el PR         | `git branch -d feature/hu-05-crear-cita`                      | La rama efímera muere; la historia queda            |
+| Cerrar un hito                             | PR `develop` → `main` y `git tag -a hito-2 -m "..."`          | El tag apunta a `main`                              |
+| ¿Se coló un `.env` en el historial?        | `git log --all --oneline -- .env`                             | Sin salida = limpio                                 |
 
-> **Prohibido:** `git push --force` sobre `develop` o `main`, y trabajar directamente sobre `main`. Si un `push` a `main` es rechazado, es el comportamiento correcto: crea una rama y abre un PR.
+> **Prohibido:** `git push --force` sobre `develop` o `main`, y trabajar directamente sobre `main`.
+
+---
+
+<a id="roadmap"></a>
+## 📊 Roadmap de hitos del curso
+
+| Hito | Entregable                              | Fecha límite     | Estado        | Progreso                  |
+|:----:|-----------------------------------------|------------------|---------------|---------------------------|
+| 1    | Anteproyecto & Git                      | 25 Oct 2026      | ✅ Completado | `[██████████] 100%`       |
+| 2    | Modelo Relacional & Backend             | 15 Nov 2026      | 🔄 En curso   | `[██████░░░░] 60%`        |
+| 3    | Frontend Reactivo & MVP Cloud           | 10 Dic 2026      | ⏳ Pendiente  | `[░░░░░░░░░░] 0%`         |
+| 4    | Matriz de Add-ons Técnicos              | 07 Feb 2027      | ⏳ Pendiente  | `[░░░░░░░░░░] 0%`         |
+| 5    | Memoria Técnica & Defensa               | 26 Feb 2027      | ⏳ Pendiente  | `[░░░░░░░░░░] 0%`         |
+
+El seguimiento detallado está en las [Issues del repositorio](https://github.com/PabloLera92/daw-proyecto-referencia-gold/issues) y sus [hitos](https://github.com/PabloLera92/daw-proyecto-referencia-gold/milestones).
 
 ---
 
 ## 📘 GUÍA METODOLÓGICA: CÓMO REPLICAR ESTA ESTRUCTURA EN TU ANTEPROYECTO
 
-Este repositorio es un **espejo**, no una plantilla para rellenar. Lo que debes copiar es el **criterio**; lo que nunca debes copiar es el **contenido**. Sigue estos pasos en orden y, en cada uno, hazte la pregunta de control.
+Este repositorio es un **espejo**, no una plantilla para rellenar. Copia el **criterio**; nunca el **contenido**. Sigue estos pasos en orden y, en cada uno, hazte la pregunta de control.
 
-### Paso 0 · Parte de tu dominio, no del mío
-Escribe en una frase qué problema real resuelve **tu** aplicación y para quién. Si la frase solo funciona cambiando «taller» por «gimnasio», no es tuya todavía.
-*Pregunta de control: ¿podría explicarlo en 30 segundos a alguien que no sabe informática?*
+**Paso 0 · Parte de tu dominio, no del mío.** Escribe en una frase qué problema real resuelve **tu** aplicación y para quién. Si la frase solo funciona cambiando «taller» por «gimnasio», no es tuya todavía.
+*Control: ¿puedo explicarlo en 30 segundos a alguien que no sabe informática?*
 
-### Paso 1 · `.gitignore` y `.env.example` antes del primer commit
-1. Crea el `.gitignore` **adaptado a tu stack** (Laravel ignora `/vendor`; Python, `.venv/`).
-2. Escribe al lado de cada regla qué protege y por qué. Si no sabes justificarla, investígala o bórrala.
-3. Haz la **auditoría de tu `.env.example`**: recorre tu código, lista las variables que lee y documenta cada una (propósito, formato, advertencia).
-4. Comprueba con `git check-ignore -v .env` y `git ls-files` que `.env` no se sigue y `.env.example` sí.
-*Pregunta de control: ¿podría hacer público mi repo ahora mismo sin comprometer ninguna credencial?*
+**Paso 1 · `.gitignore` y `.env.example` antes del primer commit.** Adáptalos a tu stack, justifica cada regla y haz la auditoría de tus variables (propósito, formato, advertencia). Comprueba con `git check-ignore -v .env` y `git ls-files`.
+*Control: ¿podría hacer público mi repo ahora mismo sin comprometer ninguna credencial?*
 
-### Paso 2 · README profesional (en tercera persona y con datos concretos)
-- **Resumen ejecutivo:** presente técnico, tercera persona, 100-150 palabras, con *cifras o hechos de tu dominio* (quién usa qué y qué cambia). Evita «revolucionar», «soluciones innovadoras», «plataforma integral».
-- **RBAC:** deriva la matriz de **tus casos de uso**, no al revés. Mínimo Público, Usuario y Admin.
-- **Stack:** una opción por capa y **una razón ligada a tu proyecto** («Express porque ya domino JS en DWEC y comparto lenguaje con el front»), no «porque es muy popular».
-- **Guía de arranque:** pruébala en una carpeta limpia (ver nota en «Puesta en marcha»).
-*Pregunta de control: ¿un desconocido arranca mi proyecto en 5 minutos sin escribirme?*
+**Paso 2 · README profesional, en tercera persona y con datos concretos.** Resumen de 100-150 palabras con hechos de tu dominio (nada de «revolucionar» ni «solución integral»); RBAC derivado de **tus casos de uso**; una opción de stack por capa con **una razón ligada a tu proyecto**; guía de arranque probada en una carpeta limpia.
+*Control: ¿un desconocido arranca mi proyecto en 5 minutos sin escribirme?*
 
-### Paso 3 · Modelo de datos (Hito 2): de los casos de uso a las tablas
-1. Subraya los **sustantivos** de tus casos de uso: son candidatas a entidad.
-2. Busca el **flujo transaccional** (alguien «pide», «reserva», «contrata»…): ahí vive tu **M:N**.
-3. Pregunta: *¿qué hay que recordar sobre cada par?* (cantidad, precio pactado, fecha, estado…). Esos son los **atributos de la tabla intermedia**. Si no hay ninguno, no tienes una M:N de negocio.
-4. Congela lo que debe ser histórico (precios) y **no persistas lo que se calcula** (totales).
-5. Revisa 1FN, 2FN y 3FN tabla a tabla y escribe la justificación (ver `docs/der.md`).
-*Pregunta de control: si mañana cambia un precio en el catálogo, ¿se alteran mis facturas pasadas?*
+**Paso 3 · Modelo de datos (Hito 2): de los casos de uso a las tablas.** Subraya los sustantivos de tus casos de uso (candidatas a entidad); localiza el verbo transaccional (ahí vive tu **M:N**); pregunta *«¿qué hay que recordar sobre cada par?»* (esos son los atributos de la tabla intermedia); congela lo histórico (precios) y **no persistas lo que se calcula** (totales); revisa 1FN, 2FN y 3FN ([`docs/der.md`](docs/der.md)).
+*Control: si mañana cambia un precio del catálogo, ¿se alteran mis facturas pasadas?*
 
-### Paso 4 · API y arquitectura en capas
-Define primero el **contrato** (`docs/contrato_api_rest.md`) y después el código. Cada archivo cumple **una** responsabilidad: rutas cablean, controladores traducen HTTP, servicios deciden, modelos hablan con la BD, middlewares protegen. Si un controlador pasa de ~30 líneas por handler, la lógica está en el sitio equivocado.
-*Pregunta de control: ¿dónde está el SQL de mi proyecto? (Solo debe haber una respuesta: en los modelos.)*
+**Paso 4 · API y capas.** Define el **contrato** antes del código. Rutas cablean, controladores traducen HTTP, servicios deciden, modelos hablan con la BD, middlewares protegen.
+*Control: ¿dónde está el SQL de mi proyecto? Solo debe haber una respuesta: en los modelos.*
 
-### Paso 5 · Trazabilidad ágil
-Cada historia es un *issue* con la plantilla `user_story.md`: rol real de tu RBAC, criterios de aceptación **comprobables** (Dado/Cuando/Entonces, con errores y permisos) y etiquetas. Una historia = una rama = un PR con `Closes #N`. Máximo 1-2 tarjetas en `In Progress`.
-*Pregunta de control: ¿cada criterio de aceptación se puede convertir en una prueba?*
+**Paso 5 · Trazabilidad ágil.** Cada historia es un *issue* con la plantilla `user_story.md`: rol real de tu RBAC, criterios de aceptación **comprobables** y etiquetas. Una historia = una rama = un PR con `Closes #N`. Máximo 1-2 tarjetas en `In Progress`.
+*Control: ¿cada criterio de aceptación se puede convertir en una prueba?*
 
-### Qué NO copiar de este repositorio
-| No copies…                                         | Porque…                                                              |
-|----------------------------------------------------|----------------------------------------------------------------------|
+<details>
+<summary><b>🚫 Qué NO copiar, y cómo evitar la sobreingeniería y el texto hueco de IA</b></summary>
+
+<br>
+
+| No copies…                                          | Porque…                                                              |
+|-----------------------------------------------------|----------------------------------------------------------------------|
 | Nombres de entidades, atributos y roles de GesTaller | Tu dominio es otro; un DER de taller en un proyecto de otro sector delata la copia |
-| Frases de los README, comentarios o mensajes de error | La defensa oral te pedirá explicarlas con tus palabras               |
-| Los `TODO(alumno)` sin resolver                    | Son marcas deliberadas: una entrega con ellos intactos es una alerta |
-| El nivel de detalle de los comentarios didácticos  | En tu código, comenta el **porqué** de decisiones no obvias, no el obvio |
+| Frases de README, comentarios o mensajes de error   | La defensa oral te pedirá explicarlas con tus palabras               |
+| Los `TODO(alumno)` sin resolver                     | Son marcas deliberadas: una entrega con ellos intactos es una alerta |
 
-### Cómo evitar la sobreingeniería y el texto hueco generado por IA
+| Señal de sobreingeniería                                  | Alternativa proporcionada                              |
+|-----------------------------------------------------------|--------------------------------------------------------|
+| Microservicios, colas o Kubernetes en un MVP de dos meses | Un monolito en capas bien separado                     |
+| Un patrón (CQRS, DDD, hexagonal) que no sabes defender    | Las cuatro capas de este repo y nada más               |
+| 20 entidades «por si acaso»                               | 5-7 tablas de negocio con un flujo transaccional completo |
+| IA o visión artificial como núcleo del MVP                | Un CRUD + transacción M:N que funcione en producción   |
 
-| Señal de sobreingeniería                              | Alternativa proporcionada                                            |
-|-------------------------------------------------------|----------------------------------------------------------------------|
-| Microservicios, colas o Kubernetes en un MVP de dos meses | Un monolito en capas bien separado                                |
-| Un patrón (CQRS, DDD, hexagonal) que no sabes defender | Las cuatro capas de este repo y nada más                           |
-| 20 entidades «por si acaso»                           | 5-7 tablas de negocio con un flujo transaccional completo            |
-| IA o visión artificial como núcleo del MVP (causa de insuficiente en el Hito 1) | Un flujo CRUD + transacción M:N que funcione en producción |
-
-| Señal de texto hueco de IA                            | Cómo se arregla                                                      |
-|-------------------------------------------------------|----------------------------------------------------------------------|
-| «En el mundo actual…», «sin duda», «robusta y escalable» | Sustituye cada adjetivo por un dato o un hecho verificable        |
-| Párrafos que valen para cualquier proyecto            | Si cambia el dominio y la frase sigue valiendo, bórrala              |
-| Justificar el stack con «es muy popular y potente»    | Razón concreta ligada a tu proyecto y a tus conocimientos            |
-| Código o comentarios que no sabes explicar            | Defínelo con tus palabras o elimínalo: se evalúa en la defensa       |
+| Señal de texto hueco de IA                                | Cómo se arregla                                        |
+|-----------------------------------------------------------|--------------------------------------------------------|
+| «En el mundo actual…», «sin duda», «robusta y escalable»  | Sustituye cada adjetivo por un dato verificable        |
+| Párrafos que valen para cualquier proyecto                | Si cambia el dominio y la frase sigue valiendo, bórrala |
+| Justificar el stack con «es muy popular»                  | Razón concreta ligada a tu proyecto y a tus conocimientos |
 
 **Regla de oro:** cada frase de tu documentación y cada línea de tu código debe poder defenderse en voz alta cuando el tutor pregunte «¿por qué?».
 
+</details>
+
 ---
 
-## Mapa de requisitos oficiales
+## ✅ Mapa de requisitos oficiales
 
-| Requisito (Hitos 1 y 2)                               | Dónde se demuestra en este repo                  |
-|-------------------------------------------------------|--------------------------------------------------|
-| `.gitignore` exhaustivo, sin secretos ni dependencias | [`.gitignore`](.gitignore)                       |
-| `.env.example` documentado                            | [`.env.example`](.env.example)                   |
-| README con badges, ficha, RBAC, stack y arranque      | Este archivo                                     |
-| `Anteproyecto.md` (Hito 1)                            | [`Anteproyecto.md`](Anteproyecto.md)             |
-| DER Mermaid ≥ 5 tablas de negocio + M:N con atributos + 3FN | [`docs/der.md`](docs/der.md)               |
-| Contrato REST, códigos HTTP y RFC 9457                | [`docs/contrato_api_rest.md`](docs/contrato_api_rest.md) |
-| Evidencias de pruebas (OpenAPI/Postman)               | [`docs/api/`](docs/api/README.md)                |
-| Historias de usuario y PR trazables                   | [`.github/`](.github/ISSUE_TEMPLATE/user_story.md) |
-| Arquitectura en capas                                 | [`backend/src/`](backend/src)                    |
-| Migraciones y seeders por código, comando único       | [`backend/database/`](backend/database/migrations/README.md) |
+| Requisito (Hitos 1 y 2)                                     | Dónde se demuestra                                              |
+|-------------------------------------------------------------|-----------------------------------------------------------------|
+| `.gitignore` exhaustivo, sin secretos ni dependencias       | [`.gitignore`](.gitignore)                                      |
+| `.env.example` documentado                                  | [`.env.example`](.env.example)                                  |
+| README con badges, ficha, RBAC, stack y arranque            | Este archivo                                                    |
+| `Anteproyecto.md` (Hito 1)                                  | [`Anteproyecto.md`](Anteproyecto.md)                            |
+| DER Mermaid ≥ 5 tablas + M:N con atributos + 3FN            | [`docs/der.md`](docs/der.md)                                    |
+| Contrato REST, códigos HTTP y RFC 9457                      | [`docs/contrato_api_rest.md`](docs/contrato_api_rest.md)        |
+| Evidencias de pruebas (OpenAPI/Postman)                     | [`docs/api/`](docs/api/README.md)                               |
+| Historias de usuario y PR trazables                         | [`.github/`](.github/ISSUE_TEMPLATE/user_story.md)              |
+| Arquitectura en capas                                       | [`backend/src/`](backend/src)                                   |
+| Migraciones y seeders por código, comando único             | [`backend/database/`](backend/database/migrations/README.md)    |
 
-## Licencia
+<div align="center">
 
-Uso académico — CIFP Avilés, curso 2026/2027. Proyecto ficticio de referencia.
+<sub>Uso académico — CIFP Avilés, curso 2026/2027 · Proyecto ficticio de referencia · Tutor: Pablo Lera Menéndez</sub>
+
+</div>
